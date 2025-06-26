@@ -1,5 +1,9 @@
 import { isValidEmail } from "@/utils";
 import { NextApiRequest, NextApiResponse } from "next";
+import { sign } from "jsonwebtoken";
+import { serialize } from "cookie";
+
+const JWT_SECRET = process.env.NEXTAUTH_SECRET!;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Only allow POST requests
@@ -25,7 +29,32 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   // Simulated login check
+  // if (email === "saumyakushwahsk@gmail.com" && password === "test123") {
+  //   return res.status(200).json({ message: "Login successful" });
+  // }
+
   if (email === "saumyakushwahsk@gmail.com" && password === "test123") {
+    // Generate JWT token
+    const token = sign(
+      {
+        name: "Saumya Kushwah",
+        email,
+      },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    // Set cookie for next-auth session token
+    res.setHeader(
+      "Set-Cookie",
+      serialize("next-auth.session-token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: 60 * 60,
+      })
+    );
+
     return res.status(200).json({ message: "Login successful" });
   }
 

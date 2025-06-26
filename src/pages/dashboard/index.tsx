@@ -1,6 +1,12 @@
 import { GetServerSideProps } from "next";
 import { useSession, signOut, getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import jwt, { JwtPayload } from "jsonwebtoken";
+
+type SessionUser = {
+  name: string;
+  email: string;
+};
 
 export default function Dashboard() {
   const { data: session } = useSession(); // Get current session data from NextAuth
@@ -34,11 +40,20 @@ export default function Dashboard() {
 }
 
 // Server-side protection for authenticated access
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps<{
+  session: { user: SessionUser };
+}> = async (context) => {
+  // Check NextAuth session (Google OAuth)
   const session = await getSession(context);
+  if (session) {
+    return {
+      props: { session: { user: session.user as SessionUser } },
+    };
+  }
 
-  // If no session, redirect to sign-in page
-  if (!session) {
+  // Check Mock Signup session
+  const token = context.req.cookies["next-auth.session-token"];
+  if (!token) {
     return {
       redirect: {
         destination: "/",
@@ -47,8 +62,39 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  // If session exists, allow access
+  try {
+    const decoded = jwt.verify(
+      token,
+      process.env.NEXTAUTH_SECRET!
+    ) as JwtPayload;
+
+    if (decoded && decoded.email && decoded.name) {
+      return {
+        props: {
+          session: {
+            user: {
+              name: decoded.name,
+              email: decoded.email,
+            },
+          },
+        },
+      };
+    }
+  } catch (error) {
+    // Token is invalid or expired
+    console.warn("Invalid token in getServerSideProps:", error);
+    return {
+      redirect: {
+        destination: "/?error=token_invalid",
+        permanent: false,
+      },
+    };
+  }
+
   return {
-    props: { session },
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
   };
 };
