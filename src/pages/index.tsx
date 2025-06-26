@@ -2,6 +2,7 @@ import AuthLayout from "@/components/AuthLayout";
 import { isValidEmail } from "@/utils";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -99,12 +100,12 @@ export default function SignIn() {
             />{" "}
             Remember Me
           </label>
-          <a
+          <Link
             href="/forgot-password"
             className="hover:underline text-[#8854C0] cursor-pointer"
           >
             Forgot Password?
-          </a>
+          </Link>
         </div>
 
         <button
@@ -146,12 +147,12 @@ export default function SignIn() {
 
         <p className="text-sm text-center mt-6 text-[#dadada]">
           Don’t have an account?{" "}
-          <a
+          <Link
             href="/signup"
             className="text-primary hover:underline ml-2 text-[#8854C0] cursor-pointer"
           >
             Sign up
-          </a>
+          </Link>
         </p>
       </div>
     </AuthLayout>
