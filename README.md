@@ -1,40 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# vTrades – Authentication Flow
 
-## Getting Started
+A professionally built frontend authentication app using **Next.js**, **TypeScript**, and **Tailwind CSS**. This project goes beyond the basic requirements to implement a polished authentication flow with mock APIs, validation, secure routing, and OAuth support.
 
-First, run the development server:
+---
+
+## 📦 Getting Started
+
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/saumyakushwah/saumyakushwah-vTrades-FrontendDeveloperTask
+cd saumyakushwah-vTrades-FrontendDeveloperTask
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### 3. Set Up Environment Variables
+Create a **.env.local** file in the root directory and add the following:
+```env
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+NEXTAUTH_SECRET=your-random-secret
+NEXTAUTH_URL=http://localhost:3000
+```
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### 4. Start the Development Server
+```bash
+npm run dev
+```
+Open http://localhost:3000 in your browser to see the app.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🔐 Authentication
+- Email and password-based login with proper field validations
+  - Uses reusable `isValidEmail()` utility function
+  - Error handling using `react-toastify`
+- Toggle for show/hide password with icon-based interaction
+- Google OAuth login via NextAuth
+- Remember Me checkbox (non-functional placeholder for UI parity)
+- Session managed securely using `next-auth`
 
-## Learn More
+### 🔁 Password Recovery Flow
+- Mocked forgot password functionality with:
+  - API simulation for sending OTP (`/api/forgot-password`)
+  - Client-side OTP entry screen with:
+    - 6 input boxes (auto-focus and numeric input only)
+    - Countdown timer (30 seconds) for resend logic
+    - UI modal confirmation on resend
+- OTP verification screen:
+  - Validates the OTP using a mocked backend (`/api/verify-otp`)
+  - On success, redirects to reset password screen
+- Reset password:
+  - New password submission form with validation
+  - API mock simulates password update (`/api/reset-password`)
 
-To learn more about Next.js, take a look at the following resources:
+### 🧪 Mock API Layer
+- All API routes simulate real behavior:
+  - `/api/login` – Validates email & password and returns status
+  - `/api/forgot-password` – Sends OTP simulation
+  - `/api/verify-otp` – Verifies OTP input
+  - `/api/reset-password` – Handles password reset flow
+- Includes:
+  - Input validation
+  - Simulated delay-free responses
+  - Proper error handling and response codes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+### 🧩 Utilities
+- Centralized reusable utility function:  
+  - `isValidEmail()` handles consistent client and server-side validation
+- Clean folder structure for future scalability
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 👤 Dashboard (Protected Route)
+- Route protection using `getServerSideProps` and NextAuth session check
+- Redirects to login page if the user is not authenticated
+- Displays logged-in user’s name from session or localStorage fallback
+- Sign-out functionality that clears both session and fallback data
 
-## Deploy on Vercel
+### 🧑‍🎨 UI/UX Enhancements
+- Responsive layout built with Tailwind CSS
+- Styled placeholder text for form fields
+- Minimal hover effects for Sign In, and OAuth Buttons
+- Consistent design system with dark-themed layout
+- Uses Source Sans Pro font
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+### 🌐 Environment Management
+- Secure and structured use of `.env.local`:
+  - `GOOGLE_CLIENT_ID`
+  - `GOOGLE_CLIENT_SECRET`
+  - `NEXTAUTH_SECRET`
+  - `NEXTAUTH_URL`
+
+## 🔗 Live Preview
+
+- **Hosted App**: 

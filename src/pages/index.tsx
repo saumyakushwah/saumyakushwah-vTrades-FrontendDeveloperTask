@@ -1,115 +1,159 @@
+import AuthLayout from "@/components/AuthLayout";
+import { isValidEmail } from "@/utils";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+// import { FcGoogle } from "react-icons/fc";
+import { toast } from "react-toastify";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+export default function SignIn() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+  // Handles login form submission
+  const handleLogin = async () => {
+    // Basic input validation
+    if (!email || !password) {
+      toast.error("Please enter both email and password.");
+      return;
+    }
 
-export default function Home() {
+    if (!isValidEmail(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    try {
+      // API call to mock login endpoint
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // Store a fallback name for dashboard use
+        localStorage.setItem("fallbackName", email.split("@")[0]);
+        toast.success(data.message || "Login successful!");
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 1000); // short delay to let toast show
+      } else {
+        toast.error(data.message || "Invalid credentials.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
+
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <AuthLayout>
+      <div className="w-full max-w-md mx-auto px-4 md:px-0">
+        <h1 className="text-4xl font-semibold mb-2">Sign In</h1>
+        <p className="text-sm text-gray-400 mb-8">
+          Manage your workspace seamlessly. Sign in to continue.
+        </p>
+
+        <label className="block mb-2 text-xs font-medium text-white">
+          Email Address
+        </label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="navinash@workhive.com"
+          className="w-full mb-6 py-[15px] px-[12px] border border-[#30303d] rounded bg-[#1D1E26] text-white text-sm font-semibold  placeholder-[#85898B] focus:outline-none"
         />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        <label className="block mb-2 text-xs font-medium text-white">
+          Password
+        </label>
+        <div className="relative mb-3">
+          <input
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="********"
+            className="w-full py-[15px] px-[12px] border border-[#30303d] rounded bg-[#1D1E26] pr-10 text-white text-sm font-semibold  placeholder-[#85898B] focus:outline-none"
+          />
+          <button
+            type="button"
+            className="absolute right-3 top-3 text-gray-400"
+            onClick={() => setShowPassword(!showPassword)}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
+
+        <div className="flex justify-between items-center mb-10 text-sm">
+          <label className="flex items-center text-xs cursor-pointer">
+            <input
+              type="checkbox"
+              className="mr-2 w-[18px] h-[18px] accent-[#8854C0]"
+            />{" "}
+            Remember Me
+          </label>
           <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/forgot-password"
+            className="hover:underline text-[#8854C0] cursor-pointer"
           >
-            Read our docs
+            Forgot Password?
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+
+        <button
+          onClick={handleLogin}
+          className="w-full bg-[#8854C0] hover:bg-[#8b5bbe] transition-colors duration-200 text-white py-3 rounded-[10px] mb-10 text-base font-semibold cursor-pointer"
+        >
+          Sign In
+        </button>
+
+        {/* Divider */}
+        <div className="flex items-center justify-center mb-8">
+          <hr className="flex-grow border-t border-gray-600" />
+          <span className="mx-5 text-sm text-gray-400">or</span>
+          <hr className="flex-grow border-t border-gray-600" />
+        </div>
+
+        {/* OAuth buttons */}
+        <button
+          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+          className="w-full bg-[#1D1E26] border border-[#30303d] py-[16px] rounded mb-6 flex items-center justify-center gap-[13px] cursor-pointer hover:bg-[#2b2c35] transition-colors duration-200"
         >
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src="/icons/google.svg"
+            alt="Google logo"
+            width={20}
+            height={20}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+          <span>Sign in with Google</span>
+        </button>
+        <button className="w-full bg-[#1D1E26] border border-[#30303d] py-[16px] rounded mb-6 flex items-center justify-center gap-[13px] cursor-not-allowed">
           <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+            src="/icons/microsoft.svg"
+            alt="Microsoft logo"
+            width={20}
+            height={20}
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <span>Sign in with Microsoft</span>
+        </button>
+
+        <p className="text-sm text-center mt-6 text-[#dadada]">
+          Don’t have an account?{" "}
+          <a
+            href="/signup"
+            className="text-primary hover:underline ml-2 text-[#8854C0] cursor-pointer"
+          >
+            Sign up
+          </a>
+        </p>
+      </div>
+    </AuthLayout>
   );
 }
