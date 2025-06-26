@@ -97,4 +97,5 @@ Open http://localhost:3000 in your browser to see the app.
 
 ## 🔗 Live Preview
 
-- **Hosted App**: 
+- **Hosted App**: [https://saumyakushwah-v-trades-frontend-dev.vercel.app](https://saumyakushwah-v-trades-frontend-dev.vercel.app)
+- **GitHub Repository**: [https://github.com/saumyakushwah/saumyakushwah-vTrades-FrontendDeveloperTask](https://github.com/saumyakushwah/saumyakushwah-vTrades-FrontendDeveloperTask)
