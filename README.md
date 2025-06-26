@@ -37,6 +37,8 @@ Open http://localhost:3000 in your browser to see the app.
 
 ### 🔐 Authentication
 - Email and password-based login with proper field validations
+  - Uses a custom `/api/login` route with JWT cookie session  
+  - Includes fallback support for sessions outside NextAuth  
   - Uses reusable `isValidEmail()` utility function
   - Error handling using `react-toastify`
 - Toggle for show/hide password with icon-based interaction
@@ -75,7 +77,9 @@ Open http://localhost:3000 in your browser to see the app.
 - Clean folder structure for future scalability
 
 ### 👤 Dashboard (Protected Route)
-- Route protection using `getServerSideProps` and NextAuth session check
+- Route protection using `getServerSideProps` with support for both:
+  - Google OAuth (`next-auth`)
+  - Custom JWT login sessions (via `/api/login`)
 - Redirects to login page if the user is not authenticated
 - Displays logged-in user’s name from session or localStorage fallback
 - Sign-out functionality that clears both session and fallback data
