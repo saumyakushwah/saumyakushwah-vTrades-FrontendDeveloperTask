@@ -22,7 +22,7 @@ export default function Dashboard() {
   }, [session]);
 
   return (
-    <div className="h-screen flex items-center justify-center flex-col text-white bg-background font-sans">
+    <div className="h-screen flex items-center justify-center flex-col text-white bg-background">
       <h1 className="text-2xl mb-4">
         Welcome {session?.user?.name || fallbackName || "User"}!
       </h1>

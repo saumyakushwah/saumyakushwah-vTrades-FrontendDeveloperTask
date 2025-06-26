@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fontsource/source-sans-pro": "^5.2.5",
     "cookie": "^1.0.2",
     "jsonwebtoken": "^9.0.2",
     "next": "15.3.4",

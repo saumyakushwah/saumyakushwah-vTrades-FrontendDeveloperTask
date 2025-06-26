@@ -2,6 +2,7 @@ import AuthLayout from "@/components/AuthLayout";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import LinkSentModal from "@/components/LinkSentModal";
+import { isValidEmail } from "@/utils";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -11,6 +12,11 @@ export default function ForgotPassword() {
   const handleSubmit = async () => {
     if (!email) {
       toast.error("Please enter your email address.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      toast.error("Please enter a valid email address.");
       return;
     }
 

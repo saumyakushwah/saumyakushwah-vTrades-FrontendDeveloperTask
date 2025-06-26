@@ -7,7 +7,7 @@ interface AuthLayoutProps {
 
 const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
   return (
-    <div className="flex h-screen bg-background text-white font-sans">
+    <div className="flex h-screen bg-background text-white">
       {/* Left */}
       <div className="hidden md:flex w-full md:w-1/2 bg-background items-center justify-center px-10 py-10">
         <Image

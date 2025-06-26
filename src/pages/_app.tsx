@@ -1,6 +1,4 @@
-// Import fonts and global styles
-import "@fontsource/source-sans-pro/400.css";
-import "@fontsource/source-sans-pro/600.css";
+// Import global styles
 import "@/styles/globals.css";
 
 // TypeScript type for app props
