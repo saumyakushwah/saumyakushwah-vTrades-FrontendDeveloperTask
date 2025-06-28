@@ -51,7 +51,8 @@ export default function NewPassword() {
 
   return (
     <AuthLayout>
-      <h1 className="text-2xl font-semibold mb-2">Create New Password</h1>
+      <div className="w-full mx-auto px-4 md:px-0">
+      <h1 className="[font-size:32px] font-semibold mb-2">Create New Password</h1>
       <p className="text-sm text-gray-400 mb-8">
         Choose a strong and secure password to keep your account safe. Make sure
         it’s easy for you to remember, but hard for others to guess!
@@ -64,10 +65,10 @@ export default function NewPassword() {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="w-full mb-6 py-[15px] px-[12px] border border-[#30303d] rounded bg-[#1D1E26] text-white text-sm font-semibold placeholder-gray-500 focus:outline-none"
+        className="w-full mb-6 h-[50px] px-[12px] border border-[#30303d] rounded-[10px] bg-[#1D1E26] text-white text-sm font-semibold placeholder-gray-500 focus:outline-none"
       />
 
-      <div className="mb-11">
+      <div className="mb-[44px]">
         <label className="block mb-2 text-xs font-medium text-white">
           Re-enter your password
         </label>
@@ -75,9 +76,9 @@ export default function NewPassword() {
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className={`w-full mb-2 py-[15px] px-[12px] border ${
+          className={`w-full mb-2 h-[50px] px-[12px] border ${
             error ? "border-red-500" : "border-[#30303d]"
-          } rounded bg-[#1D1E26] text-white text-sm font-semibold placeholder-gray-500 focus:outline-none`}
+          } rounded-[10px] bg-[#1D1E26] text-white text-sm font-semibold placeholder-gray-500 focus:outline-none`}
         />
         {/* Password mismatch error */}
         {error && (
@@ -90,7 +91,7 @@ export default function NewPassword() {
 
       <button
         onClick={handleSubmit}
-        className="w-full bg-[#8854C0] hover:bg-[#8b5bbe] transition-colors duration-200 text-white py-3 rounded-[10px] text-base font-semibold cursor-pointer"
+        className="w-full bg-[#8854C0] hover:bg-[#8b5bbe] transition-colors duration-200 text-white h-[50px] rounded-[10px] text-base font-semibold cursor-pointer"
       >
         Update Password
       </button>
@@ -98,30 +99,30 @@ export default function NewPassword() {
       {/* Success Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-          <div className="bg-[#1D1E26] p-10 w-[360px] md:w-[500px] h-[409px] rounded-xl text-white flex flex-col items-center justify-center">
+          <div className="bg-[#1D1E26] p-[60px] w-[360px] md:w-[500px] h-[409px] rounded-[10px] text-white flex flex-col items-center justify-center">
             <Image
               src="/icons/check.svg"
               alt="Success"
-              width={64}
-              height={64}
-              className="mb-6"
+              width={100}
+              height={100}
             />
-            <h2 className="text-xl font-semibold mb-4 text-center">
+            <h2 className="mt-[31px] mb-[12px] text-[20px] leading-[150%] font-semibold text-center">
               Password Created!
             </h2>
-            <p className="text-sm text-gray-400 text-center mb-10">
+            <p className="text-sm text-gray-400 text-center mb-[24px] leading-[150%]">
               Your password has been successfully updated. You can now use your
               new password to log in.
             </p>
             <button
               onClick={() => router.push("/")}
-              className="ml-auto bg-[#8854C0] px-6 py-2 rounded text-sm font-semibold cursor-pointer"
+              className="ml-auto bg-[#8854C0] w-[116px] h-[50px] rounded-[10px] text-base font-semibold cursor-pointer"
             >
               Okay
             </button>
           </div>
         </div>
       )}
+      </div>
     </AuthLayout>
   );
 }

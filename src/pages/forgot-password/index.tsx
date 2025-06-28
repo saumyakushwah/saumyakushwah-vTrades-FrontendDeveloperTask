@@ -42,33 +42,35 @@ export default function ForgotPassword() {
 
   return (
     <AuthLayout>
-      <h1 className="text-2xl font-semibold mb-2">Forgot Your Password?</h1>
-      <p className="text-sm text-gray-400 mb-8">
-        Don’t worry! Enter your email address, and we’ll send you a link to
-        reset it.
-      </p>
+      <div className="w-full mx-auto px-4 md:px-0">
+        <h1 className="[font-size:32px] font-semibold mb-2">Forgot Your Password?</h1>
+        <p className="text-sm text-gray-400 mb-8">
+          Don’t worry! Enter your email address, and we’ll send you a link to
+          reset it.
+        </p>
 
-      <label className="block mb-2 text-xs font-medium text-white">
-        Email Address
-      </label>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="navinash@workhive.com"
-        className="w-full mb-6 py-[15px] px-[12px] border border-[#30303d] rounded bg-[#1D1E26] text-white text-sm font-semibold  placeholder-[#85898B] focus:outline-none"
-      />
+        <label className="block mb-2 text-xs font-medium text-white">
+          Email Address
+        </label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="navinash@workhive.com"
+          className="w-full mb-6 h-[50px] px-[12px] border border-[#30303d] rounded-[10px] bg-[#1D1E26] text-white text-sm font-semibold  placeholder-[#85898B] focus:outline-none"
+        />
 
-      <button
-        onClick={handleSubmit}
-        className="w-full bg-[#8854C0] hover:bg-[#8b5bbe] transition-colors duration-200 text-white py-3 rounded-[10px] text-base font-semibold cursor-pointer"
-      >
-        Submit
-      </button>
-      {/* Modal */}
-      {showModal && (
-        <LinkSentModal email={email} onClose={() => setShowModal(false)} />
-      )}
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-[#8854C0] hover:bg-[#8b5bbe] transition-colors duration-200 text-white h-[50px] rounded-[10px] text-base font-semibold cursor-pointer"
+        >
+          Submit
+        </button>
+        {/* Modal */}
+        {showModal && (
+          <LinkSentModal email={email} onClose={() => setShowModal(false)} />
+        )}
+      </div>
     </AuthLayout>
   );
 }

@@ -1,7 +1,6 @@
 import AuthLayout from "@/components/AuthLayout";
+import OAuthButton from "@/components/OAuthButton";
 import { isValidEmail } from "@/utils";
-import { signIn } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -56,8 +55,8 @@ export default function SignIn() {
 
   return (
     <AuthLayout>
-      <div className="w-full max-w-md mx-auto px-4 md:px-0">
-        <h1 className="text-4xl font-semibold mb-2">Sign In</h1>
+      <div className="w-full mx-auto px-4 md:px-0">
+        <h1 className="[font-size:32px] font-semibold mb-2">Sign In</h1>
         <p className="text-sm text-gray-400 mb-8">
           Manage your workspace seamlessly. Sign in to continue.
         </p>
@@ -70,7 +69,7 @@ export default function SignIn() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="navinash@workhive.com"
-          className="w-full mb-6 py-[15px] px-[12px] border border-[#30303d] rounded bg-[#1D1E26] text-white text-sm font-semibold  placeholder-[#85898B] focus:outline-none"
+          className="w-full mb-6 h-[50px] px-[12px] border border-[#30303d] rounded-[10px] bg-[#1D1E26] text-white text-sm font-semibold  placeholder-[#85898B] focus:outline-none"
         />
         <label className="block mb-2 text-xs font-medium text-white">
           Password
@@ -81,11 +80,11 @@ export default function SignIn() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="********"
-            className="w-full py-[15px] px-[12px] border border-[#30303d] rounded bg-[#1D1E26] pr-10 text-white text-sm font-semibold  placeholder-[#85898B] focus:outline-none"
+            className="w-full h-[50px] px-[12px] border border-[#30303d] rounded-[10px] bg-[#1D1E26] pr-10 text-white text-sm font-semibold  placeholder-[#85898B] focus:outline-none"
           />
           <button
             type="button"
-            className="absolute right-3 top-3 text-gray-400"
+            className="absolute right-4 top-[17px] text-gray-400"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -93,16 +92,16 @@ export default function SignIn() {
         </div>
 
         <div className="flex justify-between items-center mb-10 text-sm">
-          <label className="flex items-center text-xs cursor-pointer">
+          <label className="flex items-center cursor-pointer">
             <input
               type="checkbox"
               className="mr-2 w-[18px] h-[18px] accent-[#8854C0]"
             />{" "}
-            Remember Me
+            <p className="text-xs">Remember Me</p>
           </label>
           <Link
             href="/forgot-password"
-            className="hover:underline text-[#8854C0] cursor-pointer"
+            className="text-xs font-semibold hover:underline text-[#8854C0] cursor-pointer"
           >
             Forgot Password?
           </Link>
@@ -110,46 +109,27 @@ export default function SignIn() {
 
         <button
           onClick={handleLogin}
-          className="w-full bg-[#8854C0] hover:bg-[#8b5bbe] transition-colors duration-200 text-white py-3 rounded-[10px] mb-10 text-base font-semibold cursor-pointer"
+          className="w-full bg-[#8854C0] hover:bg-[#8b5bbe] transition-colors duration-200 text-white h-[50px] rounded-[10px] mb-[43px] text-base font-semibold cursor-pointer"
         >
           Sign In
         </button>
 
         {/* Divider */}
         <div className="flex items-center justify-center mb-8">
-          <hr className="flex-grow border-t border-gray-600" />
-          <span className="mx-5 text-sm text-gray-400">or</span>
-          <hr className="flex-grow border-t border-gray-600" />
+          <hr className="flex-grow border-t border-[#272727]" />
+          <span className="mx-3 text-sm text-white">or</span>
+          <hr className="flex-grow border-t border-[#272727]" />
         </div>
 
         {/* OAuth buttons */}
-        <button
-          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          className="w-full bg-[#1D1E26] border border-[#30303d] py-[16px] rounded mb-6 flex items-center justify-center gap-[13px] cursor-pointer hover:bg-[#2b2c35] transition-colors duration-200"
-        >
-          <Image
-            src="/icons/google.svg"
-            alt="Google logo"
-            width={20}
-            height={20}
-          />
-          <span>Sign in with Google</span>
-        </button>
-        <button className="w-full bg-[#1D1E26] border border-[#30303d] py-[16px] rounded mb-6 flex items-center justify-center gap-[13px] cursor-not-allowed">
-          <Image
-            src="/icons/microsoft.svg"
-            alt="Microsoft logo"
-            width={20}
-            height={20}
-          />
-          <span>Sign in with Microsoft</span>
-        </button>
+        <OAuthButton provider="google" />
+        <OAuthButton provider="microsoft" enabled={false} />
 
-        <p className="text-sm text-center mt-6 text-[#dadada]">
+        <p className="text-xs text-center mt-6 text-[#dadada]">
           Don’t have an account?{" "}
           <Link
             href="/signup"
-            className="text-primary hover:underline ml-2 text-[#8854C0] cursor-pointer"
+            className="font-semibold text-primary hover:underline ml-2 text-[#8854C0] cursor-pointer"
           >
             Sign up
           </Link>

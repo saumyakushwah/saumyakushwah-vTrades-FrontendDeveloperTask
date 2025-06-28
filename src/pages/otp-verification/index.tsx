@@ -94,55 +94,57 @@ export default function OTPVerification() {
 
   return (
     <AuthLayout>
-      <h1 className="text-2xl font-semibold mb-2">Enter OTP</h1>
-      <p className="text-sm text-gray-400 mb-4">
-        Enter the OTP that we have sent to your email address {email}.
-      </p>
-      <button
-        className="text-sm text-[#8854C0] mb-6 hover:underline cursor-pointer"
-        onClick={() => router.push("/forgot-password")}
-      >
-        Change Email Address
-      </button>
+      <div className="w-full mx-auto px-4 md:px-0">
+        <h1 className="[font-size:32px] font-semibold mb-2">Enter OTP</h1>
+        <p className="text-sm text-gray-400 mb-[32px]">
+          Enter the OTP that we have sent to your email address {email}.
+        </p>
+        <button
+          className="text-[16px] text-[#8854C0] mb-[32px] hover:underline cursor-pointer"
+          onClick={() => router.push("/forgot-password")}
+        >
+          Change Email Address
+        </button>
 
-      <div className="flex gap-2 justify-between mb-6">
-        {otp.map((digit, idx) => (
-          <input
-            id={`otp-${idx}`}
-            key={idx}
-            maxLength={1}
-            value={digit}
-            placeholder="0"
-            onChange={(e) => handleChange(idx, e.target.value)}
-            className="w-12 h-12 text-center text-white text-lg font-bold bg-[#1D1E26] border border-[#30303d] rounded-[10px] focus:outline-none placeholder-[#85898B]"
-          />
-        ))}
-      </div>
+        <div className="flex gap-[22px] justify-between mb-[44px]">
+          {otp.map((digit, idx) => (
+            <input
+              id={`otp-${idx}`}
+              key={idx}
+              maxLength={1}
+              value={digit}
+              placeholder="0"
+              onChange={(e) => handleChange(idx, e.target.value)}
+              className="w-12 h-12 text-center text-white text-[24px] font-medium bg-[#1D1E26] border border-[#30303d] rounded-[10px] focus:outline-none placeholder-[#85898B]"
+            />
+          ))}
+        </div>
 
-      <div className="flex items-center justify-between mb-10 text-sm text-gray-400">
-        {timer > 0 ? (
-          <div className="flex items-center gap-2">
-            <MdAccessTime size={18} />
-            <span>{`${timer} sec`}</span>
-          </div>
-        ) : timer === 0 ? (
-          <button
-            onClick={handleResendOtp}
-            className="text-[#8854C0] hover:underline cursor-pointer"
-          >
-            Resend OTP
-          </button>
-        ) : null}
+        <div className="flex items-center justify-between mb-[44px] text-sm text-gray-400">
+          {timer > 0 ? (
+            <div className="flex items-center gap-2 text-[14px]">
+              <MdAccessTime size={18} />
+              <span>{`${timer} sec`}</span>
+            </div>
+          ) : timer === 0 ? (
+            <button
+              onClick={handleResendOtp}
+              className="text-[14px] text-[#8854C0] hover:underline cursor-pointer"
+            >
+              Resend OTP
+            </button>
+          ) : null}
+        </div>
+        {showModal && (
+          <LinkSentModal email={email} onClose={() => setShowModal(false)} />
+        )}
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-[#8854C0] hover:bg-[#8b5bbe] transition-colors duration-200 text-white h-[50px] rounded-[10px] text-base font-semibold cursor-pointer"
+        >
+          Continue
+        </button>
       </div>
-      {showModal && (
-        <LinkSentModal email={email} onClose={() => setShowModal(false)} />
-      )}
-      <button
-        onClick={handleSubmit}
-        className="w-full bg-[#8854C0] hover:bg-[#8b5bbe] transition-colors duration-200 text-white py-3 rounded-[10px] text-base font-semibold cursor-pointer"
-      >
-        Continue
-      </button>
     </AuthLayout>
   );
 }
