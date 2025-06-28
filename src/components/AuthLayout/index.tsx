@@ -9,16 +9,14 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
     <div className="flex h-screen bg-background text-white">
       {/* Left */}
       <div
-        className="relative ml-10 my-10 min-w-[720px] max-w-[720px] rounded-[20px] overflow-hidden"
+        className="hidden md:block relative ml-10 my-10 min-w-[720px] max-w-[720px] rounded-[20px] overflow-hidden"
         style={{
           backgroundImage: `url('/signin-illustration.png')`,
           backgroundSize: "cover",
           backgroundPosition: "bottom",
         }}
       >
-        <div
-          className="absolute w-full bottom-0 left-0 p-10"
-        >
+        <div className="absolute w-full bottom-0 left-0 p-10">
           <p className="text-[48px] leading-[1.19] font-semibold">
             Welcome to WORKHIVE!
           </p>

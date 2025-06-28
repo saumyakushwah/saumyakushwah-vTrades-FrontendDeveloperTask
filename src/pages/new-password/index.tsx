@@ -99,7 +99,7 @@ export default function NewPassword() {
       {/* Success Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-          <div className="bg-[#1D1E26] p-[60px] w-[360px] md:w-[500px] h-[409px] rounded-[10px] text-white flex flex-col items-center justify-center">
+          <div className="bg-[#1D1E26] p-[60px] w-[360px] md:w-[500px] h-[430px] md:h-[409px] rounded-[10px] text-white flex flex-col items-center justify-center">
             <Image
               src="/icons/check.svg"
               alt="Success"
