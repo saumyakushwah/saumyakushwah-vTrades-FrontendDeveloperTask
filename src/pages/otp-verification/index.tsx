@@ -106,7 +106,7 @@ export default function OTPVerification() {
           Change Email Address
         </button>
 
-        <div className="flex gap-[22px] justify-between mb-[44px]">
+        <div className="flex gap-[4px] md:gap-[22px] justify-between mb-[44px]">
           {otp.map((digit, idx) => (
             <input
               id={`otp-${idx}`}
